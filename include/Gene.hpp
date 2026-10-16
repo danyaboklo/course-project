@@ -15,13 +15,18 @@ class Gene
 private:
     std::string name_;
     DnaSequence dnaSequence_;
+    bool expressionActive_;
 
 public:
     Gene(const std::string& name, const std::string& sequence);
 
     ~Gene();
 
+    bool Validate() const;
+
     void ActivateExpression();
+
+    void DeactivateExpression();
 
     void PrintInfo() const;
 };

@@ -7,7 +7,17 @@
 
 int main()
 {
-    std::cout << "=== Композиция ===\n";
+    std::cout << "=== Статический объект ===\n";
+
+    static Gene staticGene(
+        "StaticGene",
+        "ATGC"
+    );
+
+    staticGene.PrintInfo();
+
+
+    std::cout << "\n=== Композиция ===\n";
 
     // Демонстрация композиции:
     // DnaSequence является частью Gene и уничтожается вместе с ним.
@@ -18,6 +28,8 @@ int main()
         );
 
         gene.PrintInfo();
+        gene.ActivateExpression();
+        gene.DeactivateExpression();
     }
 
 
@@ -39,11 +51,11 @@ int main()
 
         construction.CheckConstruction();
         construction.PrintInfo();
+        construction.Simulate();
     }
 
 
-    // Проверка времени жизни объекта при агрегации:
-    // после удаления GeneticConstruction объект Gene продолжает существовать.
+    // После удаления GeneticConstruction объект Gene продолжает существовать.
     std::cout << "Ген всё ещё существует:\n";
 
     externalGene->PrintInfo();
@@ -58,8 +70,24 @@ int main()
     // Корректная последовательность ДНК.
     DnaSequence correct("ATGC");
 
+    std::cout << "Содержит TGC: "
+              << (correct.ContainsMotif("TGC") ? "да" : "нет")
+              << std::endl;
+
     // Некорректная последовательность ДНК.
     DnaSequence incorrect("ATGX");
+
+
+    std::cout << "\n=== Нарушение правила конструкции ===\n";
+
+    {
+        GeneticConstruction invalidConstruction(
+            "Invalid construction",
+            nullptr
+        );
+
+        invalidConstruction.Simulate();
+    }
 
 
     std::cout << "\n=== new/delete ===\n";
@@ -96,26 +124,28 @@ int main()
 
     std::cout << "\n=== Массив объектов ===\n";
 
-    // Статический массив объектов класса.
+    // Локальный массив объектов класса.
     Gene genes[2] =
     {
-        Gene("Gene1", "ATGC"),
-        Gene("Gene2", "ATGC")
+        {"Gene1", "ATGC"},
+        {"Gene2", "ATGC"}
     };
+
 
     std::cout << "\n=== Динамический массив объектов ===\n";
 
     // Динамический массив объектов класса.
     Gene* dynamicArray = new Gene[2]
     {
-        Gene("ArrayGene1", "ATGC"),
-        Gene("ArrayGene2", "ATGC")
+        {"ArrayGene1", "ATGC"},
+        {"ArrayGene2", "ATGC"}
     };
 
     dynamicArray[0].PrintInfo();
     dynamicArray[1].PrintInfo();
 
     delete[] dynamicArray;
+
 
     std::cout << "\n=== Массив динамических объектов ===\n";
 

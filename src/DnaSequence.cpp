@@ -25,6 +25,11 @@ DnaSequence::~DnaSequence()
 
 bool DnaSequence::Validate() const
 {
+    if (sequence_.empty())
+    {
+        return false;
+    }
+
     for (const char nucleotide : sequence_)
     {
         if (nucleotide != 'A' &&
@@ -37,6 +42,17 @@ bool DnaSequence::Validate() const
     }
 
     return true;
+}
+
+
+bool DnaSequence::ContainsMotif(const std::string& motif) const
+{
+    if (motif.empty())
+    {
+        return false;
+    }
+
+    return sequence_.find(motif) != std::string::npos;
 }
 
 

@@ -2,7 +2,6 @@
 
 #include <string>
 
-
 class Gene;
 
 /**
@@ -22,7 +21,9 @@ public:
 
     ~GeneticConstruction();
 
-    void CheckConstruction() const;
+    bool CheckConstruction() const;
+
+    void Simulate() const;
 
     void PrintInfo() const;
 };
